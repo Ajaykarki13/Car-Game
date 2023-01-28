@@ -24,18 +24,34 @@ let player = {
 
 
 function start(){
-     console.log("Car")
-    let car = document.querySelector('.car');
     
+    let car = document.querySelector('.car');
+    let road=gameScreen.getBoundingClientRect();
+    //move the car
+
+if(controls.ArrowUp && player.y>road.top){
+  player.y -= player.speed}
+
+  if(controls.ArrowDown && player.y<road.bottom-(carRect.height+carRect.height/2)){
+    player.y += player.speed}
+
+    if(controls.ArrowLeft && player.x>road.left){
+      player.x -= player.speed}
+
+      if(controls.ArrowRight && player.x<road.right){
+        player.x += player.speed}
+ 
      if(player.start){
-       car.style.top = 
+       car.style.top = player.y+"px"
+       car.style.left = player.x+"px"
        requestAnimationFrame(start);
      }
 }
 
+
 function keyPressed(e) {
     console.log("Pressed",e.key);
-    if(controls.e.key !== undefined){
+    if(controls[e.key] == false){
       controls[e.key] = true;
     //   console.log(controls);
     }
@@ -43,7 +59,7 @@ function keyPressed(e) {
 
 function keyReleased(e) {
     console.log("Released",e.key);
-    if(controls.e.key !== undefined){
+    if(controls[e.key] == true){
         controls[e.key] = false;
         // console.log(controls);
       }
@@ -63,18 +79,14 @@ function startGame() {
      let car = document.createElement('div');
      car.setAttribute('class', 'car');
      car.innerText = "Car";
-     car.style.left = "10px";
-     car.style.top = "10px";
+    // car.style.left = "10px";
+     //car.style.top = "10px";
+     player.x = car.offsetLeft;
+     player.y=car.offsetTop;
      
      car.style.backgroundColor = "red";
      gameScreen.appendChild(car);
 
      requestAnimationFrame(start)
-
-
-
-     
-     
- 
 
 }
